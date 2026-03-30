@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Vanessa</title>
+
+<style>
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #ffd6e0, #ffeaf0);
+    overflow: hidden;
+  }
+
+  /* sparkle */
+  .sparkle {
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.7;
+    animation: float 6s linear infinite;
+  }
+
+  @keyframes float {
+    from {transform: translateY(100vh);}
+    to {transform: translateY(-10vh);}
+  }
+
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .center {
+    text-align: center;
+  }
+
+  .envelope {
+    width: 220px;
+    height: 140px;
+    background: white;
+    position: relative;
+    margin: auto;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  }
+
+  .flap {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #f8c8d8;
+    clip-path: polygon(0 0, 50% 60%, 100% 0);
+    transition: 0.8s;
+    transform-origin: top;
+  }
+
+  .open .flap {
+    transform: rotateX(180deg);
+  }
+
+  .btn {
+    margin-top: 20px;
+    padding: 12px 26px;
+    border-radius: 25px;
+    border: none;
+    background: #ff4d6d;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .card {
+    display: none;
+    width: 640px; /* 2x bigger */
+    max-width: 90vw;
+    background: white;
+    padding: 40px; /* bigger padding */
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+    animation: fade 0.6s;
+    font-size: 18px; /* bigger text */
+    line-height: 1.7;
+  }
+
+  .active {
+    display: block;
+  }
+
+  @keyframes fade {
+    from {opacity:0; transform: translateY(20px);}
+    to {opacity:1; transform: translateY(0);}
+  }
+
+  .choices {
+    position: relative;
+    height: 120px;
+    margin-top: 20px;
+  }
+
+  .yes {
+    padding: 12px 26px;
+    border-radius: 25px;
+    border: none;
+    background: #ff4d6d;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .no {
+    position: absolute;
+    padding: 12px 26px;
+    border-radius: 25px;
+    border: none;
+    background: #ddd;
+    cursor: pointer;
+    left: 60%;
+    top: 0;
+    transition: 0.2s;
+    font-size: 16px;
+  }
+</style>
+</head>
+
+<body>
+
+<script>
+for (let i = 0; i < 25; i++) {
+  let s = document.createElement("div");
+  s.className = "sparkle";
+  s.style.left = Math.random() * 100 + "vw";
+  s.style.animationDuration = (Math.random()*3+3) + "s";
+  document.body.appendChild(s);
+}
+</script>
+
+<div class="container">
+<div class="center">
+
+  <div id="envelopeSection">
+    <div class="envelope" id="env">
+      <div class="flap"></div>
+    </div>
+    <h2>For Vanessa 💌</h2>
+    <button class="btn" onclick="openEnvelope()">Open Me</button>
+  </div>
+
+  <div class="card" id="card1">
+    <p>
+      hi, honestly it is very nicee to meet youuu.  
+      I saw like we have many similarities that align with each other  
+      like our vision and hobbies.  
+      I also feel that we have chemistry in our chat
+    </p>
+    <button class="btn" onclick="nextCard(2)">Next</button>
+  </div>
+
+  <div class="card" id="card2">
+    <p>
+      Well this is just a greeting card and 1% of my effort 😉  
+      U may get the rest after u know me more hehe.  
+      Lets get to know each other more yahh,  
+      mohon bantuannyaaa vanessa 😌
+    </p>
+    <button class="btn" onclick="nextCard(3)">Next</button>
+  </div>
+
+  <div class="card" id="card3">
+    <p>
+      Invitation for a call ☎️  
+      time: TBA (by chat)  
+      place: anywhere you feel comfortable
+    </p>
+
+    <div class="choices">
+      <button class="yes" onclick="answer('yes')">Yes</button>
+      <button class="no" id="noBtn">No</button>
+    </div>
+
+    <p id="response"></p>
+  </div>
+
+</div>
+</div>
+
+<script>
+function openEnvelope() {
+  document.getElementById("env").classList.add("open");
+  setTimeout(() => {
+    document.getElementById("envelopeSection").style.display = "none";
+    document.getElementById("card1").classList.add("active");
+  }, 800);
+}
+
+function nextCard(num) {
+  document.querySelectorAll(".card").forEach(c => c.classList.remove("active"));
+  document.getElementById("card" + num).classList.add("active");
+}
+
+function answer(choice) {
+  let text = choice === "yes"
+    ? "Yay, I’ll be waiting for our chat then 🙂"
+    : "That’s okay, thank you for reading this 🤍";
+
+  document.getElementById("response").innerText = text;
+}
+
+const noBtn = document.getElementById("noBtn");
+noBtn.addEventListener("mouseover", () => {
+  let x = Math.random() * 300 - 150;
+  let y = Math.random() * 120 - 60;
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+});
+</script>
+
+</body>
+</html>
